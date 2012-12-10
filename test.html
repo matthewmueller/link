@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Link component</title>
+  <link rel="stylesheet" href="../build/build.css">
+</head>
+<body>
+  <h1>Link component</h1>
+  <div id="note"></div>
+
+  <li class="note">
+    <p class="title">Title</p>
+    <span class="updated_at">Date</span>
+    <div class="tags">
+      <span class="key">Tag</span> |
+    </div>
+  </li>
+
+  <script src="../build/build.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var Link = require('link'),
+        model = require('component-model/lib');
+
+    var Note = model('note')
+      .attr('title')
+      .attr('updated_at')
+      .attr('tags')
+
+    var note = new Note({
+      title : 'javascript',
+      updated_at : new Date(),
+      tags : ['blog', 'travel']
+    });
+
+    var el = document.querySelector('.note');
+        link = Link(el, note);
+
+    link.format('title', function(title) {
+      return title[0].toUpperCase() + title.slice(1);
+    });
+
+    link.render();
+
+    note.tags(['fun', 'excitement'])
+
+    setTimeout(function() {
+      note.title('css');
+    }, 300)
+
+  </script>
+</body>
+</html>

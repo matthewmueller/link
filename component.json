@@ -1,0 +1,17 @@
+{
+  "name": "link",
+  "repo": "matthewmueller/link",
+  "description": "reactive templating",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "matthewmueller/json-to-dom" : "*"
+  },
+  "development": {
+    "component/model" : "*"
+  },
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}
