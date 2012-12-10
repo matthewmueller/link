@@ -2,7 +2,8 @@
  * Module dependencies
  */
 
-var render = require('json-to-dom');
+var render = require('json-to-dom'),
+    isArray = require('isArray');
 
 /**
  * Export `Link`
@@ -30,17 +31,17 @@ function Link(el, model) {
 /**
  * Onchange
  *
- * TODO: Don't refresh the whole template. Not trivial
- * with array references
- *
- * Probably need to save the original and clear it out if
- * val is an array
+ * @param {String} name
+ * @param {Mixed} val
+ * @api private
  */
 
-Link.prototype.onchange = function(name, val, prev) {
-  var changed = {};
+Link.prototype.onchange = function(name, val) {
+  var el = (!isArray(val)) ? this.el : splice(name, this.original, this.el),
+      changed = {};
+
   changed[name] = val;
-  this.render();
+  this.render(el, changed);
 };
 
 /**
@@ -59,11 +60,14 @@ Link.prototype.format = function(attr, fn) {
 /**
  * Render the template
  *
+ * @param {DOMNode} el
+ * @param {Object} obj
  * @return {Link}
  * @api public
  */
 
-Link.prototype.render = function(obj) {
+Link.prototype.render = function(el, obj) {
+  el = el || this.el,
   obj = obj || this.model.toJSON();
 
   for(var key in obj) {
@@ -71,7 +75,25 @@ Link.prototype.render = function(obj) {
     if(fn) obj[key] = fn(obj[key]);
   }
 
-  var el = render(this.original.cloneNode(true), obj);
-  this.el.innerHTML = el.innerHTML;
+  render(this.el, obj);
   return this;
 };
+
+/**
+ * Splice elements from original el into current state el
+ *
+ * @param {String} name
+ * @param {DOMNode} orig
+ * @param {DOMNode} el
+ * @return {DomNode} new node
+ * @api private
+ */
+
+function splice(name, orig, el) {
+  var cls = '.' + name,
+      ot = orig.querySelector(cls),
+      et = el.querySelector(cls);
+
+  et.parentNode.replaceChild(ot.cloneNode(true), et);
+  return et;
+}
