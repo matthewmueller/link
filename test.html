@@ -8,7 +8,9 @@
   <div id="note"></div>
 
   <li class="note">
-    <p class="title">Title</p>
+    <p>
+      <div class="title   done" type="text" contenteditable></div>
+    </p>
     <span class="updated_at">Date</span>
     <div class="tags">
       <span class="key">Tag</span>
@@ -42,12 +44,15 @@
 
     link.render();
 
-    note.tags(['fun', 'excitement'])
+    note.on('change title', function(val) {
+      console.log(val);
+    })
+    // note.tags(['fun', 'excitement'])
 
-    setTimeout(function() {
-      note.title('css');
-      note.tags(['awesome', 'badass', 'cool']);
-    }, 300)
+    // setTimeout(function() {
+    //   note.title('css');
+    //   note.tags(['awesome', 'badass', 'cool']);
+    // }, 300)
 
 
   </script>

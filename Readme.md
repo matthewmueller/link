@@ -1,7 +1,7 @@
 
 # link
 
-  reactive templating
+  two-way template binding.
 
 ## Installation
 
@@ -9,7 +9,7 @@
 
 ## API
 
-   
+
 
 ## License
 
