@@ -131,6 +131,7 @@ function splice(name, orig, el) {
       ot = orig.querySelector(cls),
       et = el.querySelector(cls);
 
+  if(!et) return el;
   et.parentNode.replaceChild(ot.cloneNode(true), et);
   return et;
 }
